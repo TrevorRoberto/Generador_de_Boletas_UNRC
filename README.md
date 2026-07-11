@@ -1,4 +1,4 @@
-VISO DE EXENCIÓN DE RESPONSABILIDAD Y TÉRMINOS DE USO
+AVISO DE EXENCIÓN DE RESPONSABILIDAD Y TÉRMINOS DE USO
 1. Naturaleza del Proyecto y Gratuidad
 Este generador de boletas es una herramienta de software independiente, creada por un estudiante y dirigida exclusivamente a la comunidad estudiantil de la Universidad Nacional Rosario Castellanos (UNRC). Este servicio es 100% gratuito; no se cobra por su uso, no genera ningún tipo de beneficio económico, social o político para su creador, ni es utilizado para fines lucrativos. La creación de esta herramienta responde únicamente a la ausencia de mecanismos oficiales de consulta digital o impresión de boletas proporcionados por la institución para el uso personal de los alumnos.
 
