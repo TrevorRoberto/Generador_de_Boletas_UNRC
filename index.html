@@ -42,7 +42,20 @@
             <div class="form-group"><label>Nombres</label><input type="text" id="nombres" placeholder="Ej. Juan Carlos"></div>
             <div class="form-group"><label>Apellido Paterno</label><input type="text" id="apPaterno" placeholder="Ej. Pérez"></div>
             <div class="form-group"><label>Apellido Materno</label><input type="text" id="apMaterno" placeholder="Ej. López"></div>
-            <div class="form-group"><label>Semestre</label><select id="semestre"><option value="1">1</option><option value="9">9</option></select></div>
+            <div class="form-group">
+                <label>Semestre</label>
+                <select id="semestre">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label>Modalidad</label>
                 <select id="modalidad">
@@ -60,14 +73,36 @@
                     <option value="Unidad Académica Justo Sierra">Unidad Académica Justo Sierra</option>
                     <option value="Unidad Académica La Magdalena Contreras">Unidad Académica La Magdalena Contreras</option>
                     <option value="Unidad Académica Casco Santo Tomás">Unidad Académica Casco Santo Tomás</option>
+                    <option value="Unidad Académica de las Licenciaturas a Distancia">Unidad Académica de las Licenciaturas a Distancia</option>
+                    <option value="Unidad Académica Euzkadi">Unidad Académica Euzkadi</option>
+                    <option value="Unidad Académica Maza de Juárez">Unidad Académica Maza de Juárez</option>
+                    <option value="Unidad Académica Herrerías">Unidad Académica Herrerías</option>
+                    <option value="Unidad Académica Casa de Cultura Milpa Alta">Unidad Académica Casa de Cultura Milpa Alta</option>
+                    <option value="Unidad Académica Estatal Comitán, Chiapas">Unidad Académica Estatal Comitán, Chiapas</option>
+                    <option value="Unidad Académica Estatal Tijuana, Baja California - GAM">Unidad Académica Estatal Tijuana, Baja California - GAM</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>Licenciatura</label>
+                <label>Licenciatura / Ingeniería</label>
                 <select id="carrera">
-                    <option value="Ingeniería en Control y Automatización">Ingeniería en Control y Automatización</option>
                     <option value="Licenciatura en Administración y Comercio">Licenciatura en Administración y Comercio</option>
-                    <option value="Licenciatura en Tecnologías de Información">Licenciatura en Tecnologías de Información</option>
+                    <option value="Licenciatura en Tecnologías de Información y Comunicación">Licenciatura en Tecnologías de Información y Comunicación</option>
+                    <option value="Licenciatura en Ciencias Ambientales para Zonas Urbanas">Licenciatura en Ciencias Ambientales para Zonas Urbanas</option>
+                    <option value="Licenciatura en Ciencias de Datos para Negocios">Licenciatura en Ciencias de Datos para Negocios</option>
+                    <option value="Licenciatura en Contaduría y Finanzas">Licenciatura en Contaduría y Finanzas</option>
+                    <option value="Licenciatura en Derecho y Criminología">Licenciatura en Derecho y Criminología</option>
+                    <option value="Licenciatura en Urbanismo y Desarrollo Metropolitano">Licenciatura en Urbanismo y Desarrollo Metropolitano</option>
+                    <option value="Licenciatura en Derecho y Seguridad Ciudadana">Licenciatura en Derecho y Seguridad Ciudadana</option>
+                    <option value="Licenciatura en Humanidades y Narrativas Multimedia">Licenciatura en Humanidades y Narrativas Multimedia</option>
+                    <option value="Licenciatura en Economía y Desarrollo Sostenible">Licenciatura en Economía y Desarrollo Sostenible</option>
+                    <option value="Licenciatura en Turismo">Licenciatura en Turismo</option>
+                    <option value="Licenciatura en Psicología">Licenciatura en Psicología</option>
+                    <option value="Licenciatura en Relaciones Internacionales">Licenciatura en Relaciones Internacionales</option>
+                    <option value="Licenciatura en Ciencias de la Comunicación">Licenciatura en Ciencias de la Comunicación</option>
+                    <option value="Ingeniería en Control y Automatización">Ingeniería en Control y Automatización</option>
+                    <option value="Licenciatura en Filosofía e Historia">Licenciatura en Filosofía e Historia</option>
+                    <option value="Licenciatura en Desarrollo Comunitario para Zonas Metropolitanas">Licenciatura en Desarrollo Comunitario para Zonas Metropolitanas</option>
+                    <option value="Licenciatura en Mercadotecnia y Ventas">Licenciatura en Mercadotecnia y Ventas</option>
                 </select>
             </div>
         </div>
@@ -104,6 +139,7 @@
         <div class="student-info-card">
             <div class="info-row"><div class="info-label">Alumno:</div><div class="info-value" id="outNombre"></div></div>
             <div class="info-row"><div class="info-label">Semestre:</div><div class="info-value" id="outSemestre"></div></div>
+            <div class="info-row"><div class="info-label">Modalidad:</div><div class="info-value" id="outModalidad"></div></div>
             <div class="info-row"><div class="info-label">Unidad:</div><div class="info-value" id="outUnidad"></div></div>
             <div class="info-row"><div class="info-label">Carrera:</div><div class="info-value" id="outCarrera"></div></div>
         </div>
@@ -125,7 +161,8 @@
         if(urlGoogleScript !== "TU_ENLACE_AQUI") {
             fetch(urlGoogleScript)
                 .then(res => res.text())
-                .then(num => document.getElementById("numContador").innerText = num);
+                .then(num => document.getElementById("numContador").innerText = num)
+                .catch(e => console.log("Error cargando contador"));
         }
 
         function addMateria() {
@@ -139,9 +176,10 @@
         function removeRow(btn) { btn.parentElement.remove(); }
 
         function descargarPDF() {
-            const nombre = `${document.getElementById('nombres').value} ${document.getElementById('apPaterno').value} ${document.getElementById('apMaterno').value}`.toUpperCase();
+            const nombre = `${document.getElementById('nombres').value} ${document.getElementById('apPaterno').value} ${document.getElementById('apMaterno').value}`.trim().toUpperCase();
             document.getElementById('outNombre').innerText = nombre;
             document.getElementById('outSemestre').innerText = document.getElementById('semestre').value;
+            document.getElementById('outModalidad').innerText = document.getElementById('modalidad').value;
             document.getElementById('outUnidad').innerText = document.getElementById('unidad').value;
             document.getElementById('outCarrera').innerText = document.getElementById('carrera').value;
             
