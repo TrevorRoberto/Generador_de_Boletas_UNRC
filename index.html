@@ -110,6 +110,14 @@
         }
         .btn-pdf:hover { background-color: #7a1931; }
 
+        .contador-caja {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #555;
+            font-weight: bold;
+        }
+
         /* ESTILOS DE LA BOLETA */
         .boleta-container {
             display: none; 
@@ -352,6 +360,10 @@
         <div class="botones-accion">
             <button class="btn-pdf" onclick="descargarPDF()">📥 Descargar Boleta PDF</button>
         </div>
+        
+        <div class="contador-caja">
+            📊 Boletas generadas por estudiantes: <span id="numContador">...</span>
+        </div>
     </div>
 
     <!-- VISTA PREVIA DE LA BOLETA (Para el PDF) -->
@@ -430,6 +442,17 @@
     </div>
 
     <script>
+        // === AQUÍ YA INCLUÍ TU ENLACE AUTOMÁTICAMENTE ===
+        const urlGoogleScript = "https://script.google.com/macros/s/AKfycbxyltKA6_6e6PFgJ3mqQxlqNPMFOTL-xvdp0DcxK4D13NkJXFejJYwRvlz39CVzbMgb/exec"; 
+
+        // Leer el contador al cargar la página
+        if(urlGoogleScript !== "TU_ENLACE_AQUI") {
+            fetch(urlGoogleScript)
+                .then(res => res.text())
+                .then(num => document.getElementById("numContador").innerText = num)
+                .catch(e => console.log("Error cargando contador"));
+        }
+
         function addMateria() {
             const container = document.getElementById('materiasContainer');
             const row = document.createElement('div');
@@ -510,7 +533,15 @@
                 jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' }
             };
 
-            html2pdf().set(opcionesPDF).from(elementoBoleta).save();
+            html2pdf().set(opcionesPDF).from(elementoBoleta).save().then(() => {
+                // Después de guardar, sumar 1 al contador
+                if(urlGoogleScript !== "TU_ENLACE_AQUI") {
+                    document.getElementById("numContador").innerText = "...";
+                    fetch(urlGoogleScript + "?action=sumar")
+                        .then(res => res.text())
+                        .then(num => document.getElementById("numContador").innerText = num);
+                }
+            });
         }
     </script>
 </body>
