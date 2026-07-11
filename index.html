@@ -4,540 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Boletas UNRC</title>
-    <!-- Librería para generar el PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        :root {
-            --guinda-unrc: #9F2241; 
-            --dorado-unrc: #c8a355;
-            --fondo-gris: #f4f4f4;
-            --texto-oscuro: #333333;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #eef2f5;
-            margin: 0;
-            padding: 20px;
-            color: var(--texto-oscuro);
-        }
-
-        /* ESTILOS DEL FORMULARIO */
-        .config-panel {
-            background-color: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: 0 auto 30px auto;
-        }
-
-        .config-panel h2 {
-            color: var(--guinda-unrc);
-            border-bottom: 2px solid var(--dorado-unrc);
-            padding-bottom: 10px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        label {
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-            box-sizing: border-box; 
-        }
-
-        .materias-section {
-            background-color: var(--fondo-gris);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .materia-row {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr auto;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
+        :root { --guinda-unrc: #9F2241; --dorado-unrc: #c8a355; --fondo-gris: #f4f4f4; --texto-oscuro: #333333; }
+        body { font-family: 'Arial', sans-serif; background-color: #eef2f5; margin: 0; padding: 20px; color: var(--texto-oscuro); }
+        .config-panel { background-color: white; padding: 20px 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto 30px auto; }
+        .config-panel h2 { color: var(--guinda-unrc); border-bottom: 2px solid var(--dorado-unrc); padding-bottom: 10px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; width: 100%; }
+        label { font-weight: bold; font-size: 0.9em; margin-bottom: 5px; color: #555; }
+        input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
+        .materias-section { background-color: var(--fondo-gris); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .materia-row { display: grid; grid-template-columns: 1fr 2fr 1fr auto; gap: 10px; margin-bottom: 10px; align-items: center; }
+        button { padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .btn-add { background-color: #28a745; color: white; }
-        .btn-add:hover { background-color: #218838; }
-        .btn-remove { background-color: #dc3545; color: white; padding: 8px 12px;}
-        .btn-remove:hover { background-color: #c82333; }
-        
-        .botones-accion {
-            display: flex;
-            margin-top: 20px;
-        }
-
-        .btn-pdf { 
-            background-color: var(--guinda-unrc); 
-            color: white; 
-            font-size: 1.2em;
-            flex: 1;
-            padding: 15px;
-        }
-        .btn-pdf:hover { background-color: #7a1931; }
-
-        .contador-caja {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 0.9em;
-            color: #555;
-            font-weight: bold;
-        }
-
-        /* ESTILOS DE LA BOLETA */
-        .boleta-container {
-            display: none; 
-            background-color: white;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            padding-bottom: 30px; 
-        }
-
-        .banner-logos {
-            background-color: white;
-            padding: 15px 20px;
-            text-align: center;
-            border-bottom: 2px solid #eaeaea;
-        }
-
-        .banner-logos img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .boleta-header {
-            background-color: var(--guinda-unrc);
-            color: white;
-            padding: 15px 20px;
-            position: relative;
-            border-bottom: 5px solid var(--dorado-unrc);
-            text-align: left;
-        }
-
-        .boleta-header p { 
-            margin: 0; 
-            font-size: 13px; 
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .boleta-body { padding: 20px 30px; } 
-        .boleta-title { text-align: center; color: var(--guinda-unrc); font-size: 24px; margin-bottom: 5px; }
-        
-        .doc-info {
-            text-align: right;
-            font-size: 10px;
-            color: #666;
-            border-bottom: 1px solid var(--dorado-unrc);
-            padding-bottom: 5px;
-            margin-bottom: 20px;
-        }
-
-        .student-info-card {
-            background-color: #fbfbfb;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 15px 20px;
-            margin-bottom: 20px; 
-        }
-
+        .btn-remove { background-color: #dc3545; color: white; padding: 8px 12px; }
+        .btn-pdf { background-color: var(--guinda-unrc); color: white; font-size: 1.2em; width: 100%; padding: 15px; }
+        .boleta-container { display: none; background-color: white; max-width: 800px; margin: 0 auto; box-shadow: 0 0 15px rgba(0,0,0,0.2); padding: 40px; }
+        .boleta-title { text-align: center; color: var(--guinda-unrc); font-size: 24px; margin-bottom: 20px; }
+        .doc-info { text-align: center; font-size: 12px; color: #666; margin-bottom: 20px; font-style: italic; }
+        .student-info-card { background-color: #fbfbfb; border: 1px solid #e0e0e0; padding: 15px; margin-bottom: 25px; }
         .info-row { display: flex; margin-bottom: 8px; font-size: 14px; }
-        .info-row:last-child { margin-bottom: 0; }
-        .info-label { width: 150px; font-weight: bold; color: #333; }
-        .info-value { color: #555; }
-
-        .grades-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px; 
-        }
-
-        .grades-table th {
-            background-color: var(--guinda-unrc);
-            color: white;
-            padding: 10px;
-            font-size: 13px;
-            text-align: left;
-        }
-
-        .grades-table th:nth-child(3), .grades-table th:nth-child(4) { text-align: center; }
-
-        .grades-table td {
-            padding: 10px; 
-            border-bottom: 1px solid #eee;
-            border-left: 1px solid #eee;
-            border-right: 1px solid #eee;
-            font-size: 13px;
-            word-break: break-word;
-        }
-
-        .grades-table td:nth-child(3) {
-            text-align: center;
-            font-weight: bold;
-            font-size: 15px;
-            color: var(--guinda-unrc);
-        }
-
-        .grades-table td:nth-child(4) { text-align: center; }
-
-        .boleta-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-top: 20px; 
-        }
-
-        .footer-text { font-size: 11px; color: #666; }
-
-        .promedio-box {
-            background-color: var(--guinda-unrc);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .promedio-label { font-size: 14px; font-weight: bold; letter-spacing: 1px;}
-        .promedio-value { font-size: 24px; font-weight: bold; color: var(--dorado-unrc);}
-
-        /* Reglas CSS para evitar cortes extraños en filas */
-        tr, .boleta-footer {
-            page-break-inside: avoid;
-        }
+        .info-label { width: 150px; font-weight: bold; }
+        .grades-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .grades-table th { background-color: var(--guinda-unrc); color: white; padding: 10px; font-size: 13px; text-align: left; }
+        .grades-table td { padding: 10px; border: 1px solid #eee; font-size: 13px; }
+        .boleta-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .promedio-box { background-color: var(--guinda-unrc); color: white; padding: 15px; border-radius: 8px; }
+        tr { page-break-inside: avoid; }
     </style>
 </head>
 <body>
 
-    <!-- PANEL DE CONFIGURACIÓN -->
     <div class="config-panel" id="configPanel">
-        <h2>Generador de Boleta de Calificaciones UNRC</h2>
-        
+        <h2>Generador de Boleta (Ejemplo)</h2>
         <div class="form-grid">
-            <div class="form-group">
-                <label>Nombres</label>
-                <input type="text" id="nombres" value="" placeholder="Ej. Juan Carlos">
-            </div>
-            <div class="form-group">
-                <label>Apellido Paterno</label>
-                <input type="text" id="apPaterno" value="" placeholder="Ej. Pérez">
-            </div>
-            <div class="form-group">
-                <label>Apellido Materno</label>
-                <input type="text" id="apMaterno" value="" placeholder="Ej. López">
-            </div>
-            <div class="form-group">
-                <label>Matrícula</label>
-                <input type="text" id="matricula" value="" placeholder="Ej. 2026000000">
-            </div>
-            
-            <div class="form-group">
-                <label>Semestre</label>
-                <select id="semestre">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Modalidad</label>
-                <select id="modalidad">
-                    <option value="Modelo Educativo Híbrido y Dual">Modelo Educativo Híbrido y Dual</option>
-                    <option value="Presencial Híbrida">Presencial Híbrida</option>
-                    <option value="Distancia Híbrida">Distancia Híbrida</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Unidad Académica</label>
-                <select id="unidad">
-                    <option value="Unidad Académica Azcapotzalco">Unidad Académica Azcapotzalco</option>
-                    <option value="Unidad Académica Coyoacán">Unidad Académica Coyoacán</option>
-                    <option value="Unidad Académica Gustavo A. Madero">Unidad Académica Gustavo A. Madero</option>
-                    <option value="Unidad Académica Justo Sierra">Unidad Académica Justo Sierra</option>
-                    <option value="Unidad Académica La Magdalena Contreras">Unidad Académica La Magdalena Contreras</option>
-                    <option value="Unidad Académica Casco Santo Tomás">Unidad Académica Casco Santo Tomás</option>
-                    <option value="Unidad Académica de las Licenciaturas a Distancia">Unidad Académica de las Licenciaturas a Distancia</option>
-                    <option value="Unidad Académica Euzkadi">Unidad Académica Euzkadi</option>
-                    <option value="Unidad Académica Maza de Juárez">Unidad Académica Maza de Juárez</option>
-                    <option value="Unidad Académica Herrerías">Unidad Académica Herrerías</option>
-                    <option value="Unidad Académica Casa de Cultura Milpa Alta">Unidad Académica Casa de Cultura Milpa Alta</option>
-                    <option value="Unidad Académica Estatal Comitán, Chiapas">Unidad Académica Estatal Comitán, Chiapas</option>
-                    <option value="Unidad Académica Estatal Tijuana, Baja California - GAM">Unidad Académica Estatal Tijuana, Baja California - GAM</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Licenciatura / Ingeniería</label>
-                <select id="carrera">
-                    <option value="Licenciatura en Administración y Comercio">Licenciatura en Administración y Comercio</option>
-                    <option value="Licenciatura en Tecnologías de Información y Comunicación">Licenciatura en Tecnologías de Información y Comunicación</option>
-                    <option value="Licenciatura en Ciencias Ambientales para Zonas Urbanas">Licenciatura en Ciencias Ambientales para Zonas Urbanas</option>
-                    <option value="Licenciatura en Ciencias de Datos para Negocios">Licenciatura en Ciencias de Datos para Negocios</option>
-                    <option value="Licenciatura en Contaduría y Finanzas">Licenciatura en Contaduría y Finanzas</option>
-                    <option value="Licenciatura en Derecho y Criminología">Licenciatura en Derecho y Criminología</option>
-                    <option value="Licenciatura en Urbanismo y Desarrollo Metropolitano">Licenciatura en Urbanismo y Desarrollo Metropolitano</option>
-                    <option value="Licenciatura en Derecho y Seguridad Ciudadana">Licenciatura en Derecho y Seguridad Ciudadana</option>
-                    <option value="Licenciatura en Humanidades y Narrativas Multimedia">Licenciatura en Humanidades y Narrativas Multimedia</option>
-                    <option value="Licenciatura en Economía y Desarrollo Sostenible">Licenciatura en Economía y Desarrollo Sostenible</option>
-                    <option value="Licenciatura en Turismo">Licenciatura en Turismo</option>
-                    <option value="Licenciatura en Psicología">Licenciatura en Psicología</option>
-                    <option value="Licenciatura en Relaciones Internacionales">Licenciatura en Relaciones Internacionales</option>
-                    <option value="Licenciatura en Ciencias de la Comunicación">Licenciatura en Ciencias de la Comunicación</option>
-                    <option value="Ingeniería en Control y Automatización">Ingeniería en Control y Automatización</option>
-                    <option value="Licenciatura en Filosofía e Historia">Licenciatura en Filosofía e Historia</option>
-                    <option value="Licenciatura en Desarrollo Comunitario para Zonas Metropolitanas">Licenciatura en Desarrollo Comunitario para Zonas Metropolitanas</option>
-                    <option value="Licenciatura en Mercadotecnia y Ventas">Licenciatura en Mercadotecnia y Ventas</option>
-                </select>
-            </div>
+            <div class="form-group"><label>Nombres</label><input type="text" id="nombres" placeholder="Ej. Juan Carlos"></div>
+            <div class="form-group"><label>Apellido Paterno</label><input type="text" id="apPaterno" placeholder="Ej. Pérez"></div>
+            <div class="form-group"><label>Apellido Materno</label><input type="text" id="apMaterno" placeholder="Ej. López"></div>
+            <div class="form-group"><label>Semestre</label><select id="semestre"><option value="1">1</option><option value="9">9</option></select></div>
         </div>
 
         <div class="materias-section">
-            <label>Unidades de Aprendizaje (Materias)</label>
+            <label>Unidades de Aprendizaje</label>
             <div id="materiasContainer">
                 <div class="materia-row">
-                    <input type="text" placeholder="Clave (Ej. ICAT)" class="mat-clave" value="">
-                    <input type="text" placeholder="Nombre de la materia" class="mat-nombre" value="">
-                    <input type="number" placeholder="Calif." min="0" max="10" class="mat-calif" value="">
+                    <input type="text" placeholder="Clave" class="mat-clave">
+                    <input type="text" placeholder="Materia" class="mat-nombre">
+                    <input type="number" placeholder="Calif." min="0" max="10" class="mat-calif">
                     <button class="btn-remove" onclick="removeRow(this)">X</button>
                 </div>
             </div>
             <button class="btn-add" onclick="addMateria()">+ Agregar Materia</button>
         </div>
 
-        <div class="botones-accion">
-            <button class="btn-pdf" onclick="descargarPDF()">📥 Descargar Boleta PDF</button>
-        </div>
+        <button class="btn-pdf" onclick="descargarPDF()">📥 Descargar Boleta Representativa</button>
         
-        <div class="contador-caja">
-            📊 Boletas generadas por estudiantes: <span id="numContador">...</span>
-        </div>
-        
-        <!-- ENLACE AL AVISO LEGAL -->
-        <div style="text-align: center; margin-top: 15px; font-size: 0.8em;">
+        <div style="text-align: center; margin-top: 20px; font-size: 0.8em;">
             <a href="LEGAL.md" target="_blank" style="color: #666; text-decoration: underline;">Ver Aviso Legal y Términos de Uso</a>
         </div>
     </div>
 
-    <!-- VISTA PREVIA DE LA BOLETA (Para el PDF) -->
+    <!-- BOLETA -->
     <div class="boleta-container" id="boletaVista">
-        <!-- Banner del logo oficial -->
-        <div class="banner-logos">
-            <img src="{1F6DB3ED-4451-4C59-997C-431A5D8B7D09}.png" alt="Logos Oficiales">
-        </div>
-        
-        <!-- Franja inferior institucional -->
-        <div class="boleta-header">
-            <p><span id="outUnidad"></span> | <span id="outCarrera"></span></p>
+        <h2 class="boleta-title">Boleta de Calificaciones (Ejemplo)</h2>
+        <div class="doc-info">ESTE ES UN DOCUMENTO REPRESENTATIVO NO OFICIAL</div>
+
+        <div class="student-info-card">
+            <div class="info-row"><div class="info-label">Alumno:</div><div class="info-value" id="outNombre"></div></div>
+            <div class="info-row"><div class="info-label">Semestre:</div><div class="info-value" id="outSemestre"></div></div>
         </div>
 
-        <div class="boleta-body">
-            <h2 class="boleta-title">Boleta de Calificaciones</h2>
-            <div class="doc-info">DOCUMENTO INFORMATIVO</div>
+        <table class="grades-table">
+            <thead><tr><th>Clave</th><th>Materia</th><th>Calif.</th><th>Resultado</th></tr></thead>
+            <tbody id="outTablaMaterias"></tbody>
+        </table>
 
-            <div class="student-info-card">
-                <div class="info-row">
-                    <div class="info-label">Nombre completo:</div>
-                    <div class="info-value" id="outNombre"></div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Matrícula:</div>
-                    <div class="info-value" id="outMatricula"></div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Licenciatura:</div>
-                    <div class="info-value" id="outCarrera2"></div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Semestre:</div>
-                    <div class="info-value" id="outSemestre"></div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Unidad Académica:</div>
-                    <div class="info-value" id="outUnidad2"></div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Modalidad:</div>
-                    <div class="info-value" id="outModalidad"></div>
-                </div>
-            </div>
-
-            <table class="grades-table">
-                <thead>
-                    <tr>
-                        <th>Clave</th>
-                        <th>Unidad de aprendizaje</th>
-                        <th>Calificación</th>
-                        <th>Resultado</th>
-                    </tr>
-                </thead>
-                <tbody id="outTablaMaterias">
-                    <!-- Filas inyectadas por JS -->
-                </tbody>
-            </table>
-
-            <div class="boleta-footer">
-                <div class="footer-text">
-                    <p id="outConteoMaterias">Promedio calculado con 0 unidades de aprendizaje.</p>
-                    <p>Escala de calificación: 0 a 10.</p>
-                </div>
-                <div class="promedio-box">
-                    <div class="promedio-label">PROMEDIO GENERAL</div>
-                    <div class="promedio-value" id="outPromedio">0.00</div>
-                </div>
-            </div>
+        <div class="boleta-footer">
+            <p style="font-size: 11px; color: #666;">Documento generado para fines ilustrativos.</p>
+            <div class="promedio-box">PROMEDIO: <span id="outPromedio">0.00</span></div>
         </div>
     </div>
 
     <script>
-        // === TU ENLACE AUTOMÁTICO DE GOOGLE SCRIPT ===
         const urlGoogleScript = "https://script.google.com/macros/s/AKfycbxyltKA6_6e6PFgJ3mqQxlqNPMFOTL-xvdp0DcxK4D13NkJXFejJYwRvlz39CVzbMgb/exec"; 
-
-        // Leer el contador al cargar la página
-        if(urlGoogleScript !== "TU_ENLACE_AQUI") {
-            fetch(urlGoogleScript)
-                .then(res => res.text())
-                .then(num => document.getElementById("numContador").innerText = num)
-                .catch(e => console.log("Error cargando contador"));
-        }
 
         function addMateria() {
             const container = document.getElementById('materiasContainer');
             const row = document.createElement('div');
             row.className = 'materia-row';
-            row.innerHTML = `
-                <input type="text" placeholder="Clave" class="mat-clave">
-                <input type="text" placeholder="Nombre de la materia" class="mat-nombre">
-                <input type="number" placeholder="Calif." min="0" max="10" class="mat-calif">
-                <button class="btn-remove" onclick="removeRow(this)">X</button>
-            `;
+            row.innerHTML = `<input type="text" placeholder="Clave" class="mat-clave"><input type="text" placeholder="Materia" class="mat-nombre"><input type="number" placeholder="Calif." min="0" max="10" class="mat-calif"><button class="btn-remove" onclick="removeRow(this)">X</button>`;
             container.appendChild(row);
         }
 
-        function removeRow(btn) {
-            btn.parentElement.remove();
-        }
-
-        function prepararDatos() {
-            const nombreCompleto = `${document.getElementById('nombres').value} ${document.getElementById('apPaterno').value} ${document.getElementById('apMaterno').value}`.toUpperCase();
-            const matricula = document.getElementById('matricula').value;
-            const carrera = document.getElementById('carrera').value;
-            const unidad = document.getElementById('unidad').value;
-            const modalidad = document.getElementById('modalidad').value;
-            const semestre = document.getElementById('semestre').value;
-            
-            document.getElementById('outNombre').innerText = nombreCompleto;
-            document.getElementById('outMatricula').innerText = matricula;
-            document.getElementById('outCarrera').innerText = carrera;
-            document.getElementById('outCarrera2').innerText = carrera;
-            document.getElementById('outUnidad').innerText = unidad;
-            document.getElementById('outUnidad2').innerText = unidad;
-            document.getElementById('outSemestre').innerText = semestre;
-            document.getElementById('outModalidad').innerText = modalidad;
-
-            const filas = document.querySelectorAll('.materia-row');
-            const tbody = document.getElementById('outTablaMaterias');
-            tbody.innerHTML = '';
-            
-            let suma = 0;
-            let materiasAprobadas = 0;
-
-            filas.forEach(fila => {
-                const clave = fila.querySelector('.mat-clave').value || 'S/C';
-                const nombre = fila.querySelector('.mat-nombre').value || 'Materia sin nombre';
-                const calif = parseFloat(fila.querySelector('.mat-calif').value) || 0;
-                
-                const resultado = calif >= 6 ? 'Acreditada' : 'No Acreditada';
-                
-                suma += calif;
-                materiasAprobadas++;
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${clave}</td>
-                    <td>${nombre}</td>
-                    <td>${calif}</td>
-                    <td>${resultado}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-
-            const promedio = materiasAprobadas > 0 ? (suma / materiasAprobadas).toFixed(2) : '0.00';
-            document.getElementById('outPromedio').innerText = promedio;
-            document.getElementById('outConteoMaterias').innerText = `Promedio calculado con ${materiasAprobadas} unidades de aprendizaje.`;
-        }
+        function removeRow(btn) { btn.parentElement.remove(); }
 
         function descargarPDF() {
-            prepararDatos();
-            const elementoBoleta = document.getElementById('boletaVista');
+            const nombre = `${document.getElementById('nombres').value} ${document.getElementById('apPaterno').value}`.toUpperCase();
+            document.getElementById('outNombre').innerText = nombre;
+            document.getElementById('outSemestre').innerText = document.getElementById('semestre').value;
             
-            elementoBoleta.style.display = 'block';
-            
-            const opcionesPDF = {
-                margin:       [5, 10, 10, 10], // top, left, bottom, right
-                filename:     `Boleta_UNRC_${document.getElementById('matricula').value || 'Generada'}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, scrollY: 0 }, // SCROLLY: 0 ELIMINA EL MARGEN GIGANTE SUPERIOR
-                jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' },
-                pagebreak:    { mode: 'css', avoid: ['.boleta-footer', 'tr'] }
-            };
+            const tbody = document.getElementById('outTablaMaterias'); tbody.innerHTML = '';
+            let suma = 0; let count = 0;
+            document.querySelectorAll('.materia-row').forEach(f => {
+                const calif = parseFloat(f.querySelector('.mat-calif').value) || 0;
+                suma += calif; count++;
+                tbody.innerHTML += `<tr><td>${f.querySelector('.mat-clave').value}</td><td>${f.querySelector('.mat-nombre').value}</td><td>${calif}</td><td>${calif>=6?'Acreditada':'No Acreditada'}</td></tr>`;
+            });
+            document.getElementById('outPromedio').innerText = count > 0 ? (suma/count).toFixed(2) : '0.00';
 
-            html2pdf().set(opcionesPDF).from(elementoBoleta).save().then(() => {
-                // Ocultamos la vista de la boleta de nuevo para no ensuciar la pantalla
-                elementoBoleta.style.display = 'none';
-
-                // Después de guardar, sumar 1 al contador
-                if(urlGoogleScript !== "TU_ENLACE_AQUI") {
-                    document.getElementById("numContador").innerText = "...";
-                    fetch(urlGoogleScript + "?action=sumar")
-                        .then(res => res.text())
-                        .then(num => document.getElementById("numContador").innerText = num);
-                }
+            const el = document.getElementById('boletaVista');
+            el.style.display = 'block';
+            html2pdf().set({ margin: 10, filename: 'Boleta_Ejemplo.pdf', jsPDF: {format: 'letter'} }).from(el).save().then(() => {
+                el.style.display = 'none';
+                if(urlGoogleScript !== "TU_ENLACE_AQUI") fetch(urlGoogleScript + "?action=sumar");
             });
         }
     </script>
