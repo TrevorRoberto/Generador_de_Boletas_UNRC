@@ -239,11 +239,17 @@
         .promedio-label { font-size: 14px; font-weight: bold; letter-spacing: 1px;}
         .promedio-value { font-size: 24px; font-weight: bold; color: var(--dorado-unrc);}
 
+        /* Reglas CSS para evitar que se corten los elementos al imprimir o generar PDF */
+        tr, .boleta-footer, .signature-area {
+            page-break-inside: avoid;
+        }
+
         .signature-area {
             text-align: center;
             margin-top: 60px;
             font-size: 12px;
             color: #666;
+            padding-bottom: 20px; /* Margen extra inferior */
         }
         .signature-line {
             width: 250px;
@@ -442,7 +448,7 @@
     </div>
 
     <script>
-        // === AQUÍ YA INCLUÍ TU ENLACE AUTOMÁTICAMENTE ===
+        // === TU ENLACE AUTOMÁTICO DE GOOGLE SCRIPT ===
         const urlGoogleScript = "https://script.google.com/macros/s/AKfycbxyltKA6_6e6PFgJ3mqQxlqNPMFOTL-xvdp0DcxK4D13NkJXFejJYwRvlz39CVzbMgb/exec"; 
 
         // Leer el contador al cargar la página
@@ -525,12 +531,14 @@
             
             elementoBoleta.style.display = 'block';
             
+            // CONFIGURACIÓN ACTUALIZADA CON MÁRGENES MÁS AMPLIOS Y REGLAS DE CORTE
             const opcionesPDF = {
-                margin:       10,
+                margin:       [10, 10, 25, 10], // Arriba, Derecha, Abajo (aumentado para la firma), Izquierda
                 filename:     `Boleta_UNRC_${document.getElementById('matricula').value || 'Generada'}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' }
+                jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' },
+                pagebreak:    { mode: 'css', avoid: ['.signature-area', '.boleta-footer', 'tr'] }
             };
 
             html2pdf().set(opcionesPDF).from(elementoBoleta).save().then(() => {
