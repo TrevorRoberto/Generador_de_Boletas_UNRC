@@ -15,7 +15,8 @@
         label { font-weight: bold; font-size: 0.9em; margin-bottom: 5px; color: #555; }
         input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
         .materias-section { background-color: var(--fondo-gris); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .materia-row { display: grid; grid-template-columns: 1fr 2fr 1fr auto; gap: 10px; margin-bottom: 10px; align-items: center; }
+        /* Cambiamos la cuadrícula porque ya no está la clave */
+        .materia-row { display: grid; grid-template-columns: 3fr 1fr auto; gap: 10px; margin-bottom: 10px; align-items: center; }
         button { padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .btn-add { background-color: #28a745; color: white; }
         .btn-remove { background-color: #dc3545; color: white; padding: 8px 12px; }
@@ -28,7 +29,11 @@
         .info-label { width: 150px; font-weight: bold; }
         .grades-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .grades-table th { background-color: var(--guinda-unrc); color: white; padding: 10px; font-size: 13px; text-align: left; }
+        /* Ajustamos los estilos de la tabla para 3 columnas en vez de 4 */
+        .grades-table th:nth-child(2), .grades-table th:nth-child(3) { text-align: center; }
         .grades-table td { padding: 10px; border: 1px solid #eee; font-size: 13px; }
+        .grades-table td:nth-child(2) { text-align: center; font-weight: bold; font-size: 15px; color: var(--guinda-unrc); }
+        .grades-table td:nth-child(3) { text-align: center; }
         .boleta-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
         .promedio-box { background-color: var(--guinda-unrc); color: white; padding: 15px; border-radius: 8px; }
         tr { page-break-inside: avoid; }
@@ -111,7 +116,7 @@
             <label>Unidades de Aprendizaje</label>
             <div id="materiasContainer">
                 <div class="materia-row">
-                    <input type="text" placeholder="Clave" class="mat-clave">
+                    <!-- Eliminamos el input de Clave -->
                     <input type="text" placeholder="Materia" class="mat-nombre">
                     <input type="number" placeholder="Calif." min="0" max="10" class="mat-calif">
                     <button class="btn-remove" onclick="removeRow(this)">X</button>
@@ -145,7 +150,8 @@
         </div>
 
         <table class="grades-table">
-            <thead><tr><th>Clave</th><th>Materia</th><th>Calif.</th><th>Resultado</th></tr></thead>
+            <!-- Quitamos <th>Clave</th> de la tabla de impresión -->
+            <thead><tr><th>Materia</th><th>Calif.</th><th>Resultado</th></tr></thead>
             <tbody id="outTablaMaterias"></tbody>
         </table>
 
@@ -169,7 +175,8 @@
             const container = document.getElementById('materiasContainer');
             const row = document.createElement('div');
             row.className = 'materia-row';
-            row.innerHTML = `<input type="text" placeholder="Clave" class="mat-clave"><input type="text" placeholder="Materia" class="mat-nombre"><input type="number" placeholder="Calif." min="0" max="10" class="mat-calif"><button class="btn-remove" onclick="removeRow(this)">X</button>`;
+            // También quitamos la clave del botón de añadir nueva materia
+            row.innerHTML = `<input type="text" placeholder="Materia" class="mat-nombre"><input type="number" placeholder="Calif." min="0" max="10" class="mat-calif"><button class="btn-remove" onclick="removeRow(this)">X</button>`;
             container.appendChild(row);
         }
 
@@ -188,7 +195,8 @@
             document.querySelectorAll('.materia-row').forEach(f => {
                 const calif = parseFloat(f.querySelector('.mat-calif').value) || 0;
                 suma += calif; count++;
-                tbody.innerHTML += `<tr><td>${f.querySelector('.mat-clave').value}</td><td>${f.querySelector('.mat-nombre').value}</td><td>${calif}</td><td>${calif>=6?'Acreditada':'No Acreditada'}</td></tr>`;
+                // También evitamos inyectar el campo vacío de la clave
+                tbody.innerHTML += `<tr><td>${f.querySelector('.mat-nombre').value}</td><td>${calif}</td><td>${calif>=6?'Acreditada':'No Acreditada'}</td></tr>`;
             });
             document.getElementById('outPromedio').innerText = count > 0 ? (suma/count).toFixed(2) : '0.00';
 
