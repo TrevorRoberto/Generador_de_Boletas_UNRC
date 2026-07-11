@@ -125,7 +125,7 @@
             max-width: 800px;
             margin: 0 auto;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            padding-bottom: 40px; 
+            padding-bottom: 30px; 
         }
 
         .banner-logos {
@@ -158,7 +158,7 @@
             letter-spacing: 0.5px;
         }
 
-        .boleta-body { padding: 30px; }
+        .boleta-body { padding: 20px 30px; } 
         .boleta-title { text-align: center; color: var(--guinda-unrc); font-size: 24px; margin-bottom: 5px; }
         
         .doc-info {
@@ -175,7 +175,7 @@
             border: 1px solid #e0e0e0;
             border-radius: 10px;
             padding: 15px 20px;
-            margin-bottom: 25px;
+            margin-bottom: 20px; 
         }
 
         .info-row { display: flex; margin-bottom: 8px; font-size: 14px; }
@@ -186,7 +186,7 @@
         .grades-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 15px; 
         }
 
         .grades-table th {
@@ -200,7 +200,7 @@
         .grades-table th:nth-child(3), .grades-table th:nth-child(4) { text-align: center; }
 
         .grades-table td {
-            padding: 12px 10px;
+            padding: 10px; 
             border-bottom: 1px solid #eee;
             border-left: 1px solid #eee;
             border-right: 1px solid #eee;
@@ -221,7 +221,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-top: 30px;
+            margin-top: 20px; 
         }
 
         .footer-text { font-size: 11px; color: #666; }
@@ -239,22 +239,9 @@
         .promedio-label { font-size: 14px; font-weight: bold; letter-spacing: 1px;}
         .promedio-value { font-size: 24px; font-weight: bold; color: var(--dorado-unrc);}
 
-        /* Reglas CSS para evitar que se corten los elementos al imprimir o generar PDF */
-        tr, .boleta-footer, .signature-area {
+        /* Reglas CSS para evitar cortes extraños en filas */
+        tr, .boleta-footer {
             page-break-inside: avoid;
-        }
-
-        .signature-area {
-            text-align: center;
-            margin-top: 60px;
-            font-size: 12px;
-            color: #666;
-            padding-bottom: 20px; /* Margen extra inferior */
-        }
-        .signature-line {
-            width: 250px;
-            border-top: 1px solid #333;
-            margin: 0 auto 5px auto;
         }
     </style>
 </head>
@@ -439,11 +426,6 @@
                     <div class="promedio-value" id="outPromedio">0.00</div>
                 </div>
             </div>
-
-            <div class="signature-area">
-                <div class="signature-line"></div>
-                Firma del estudiante
-            </div>
         </div>
     </div>
 
@@ -531,17 +513,19 @@
             
             elementoBoleta.style.display = 'block';
             
-            // CONFIGURACIÓN ACTUALIZADA CON MÁRGENES MÁS AMPLIOS Y REGLAS DE CORTE
             const opcionesPDF = {
-                margin:       [10, 10, 25, 10], // Arriba, Derecha, Abajo (aumentado para la firma), Izquierda
+                margin:       [5, 10, 10, 10], // top, left, bottom, right
                 filename:     `Boleta_UNRC_${document.getElementById('matricula').value || 'Generada'}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
+                html2canvas:  { scale: 2, useCORS: true, scrollY: 0 }, // SCROLLY: 0 ELIMINA EL MARGEN GIGANTE SUPERIOR
                 jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' },
-                pagebreak:    { mode: 'css', avoid: ['.signature-area', '.boleta-footer', 'tr'] }
+                pagebreak:    { mode: 'css', avoid: ['.boleta-footer', 'tr'] }
             };
 
             html2pdf().set(opcionesPDF).from(elementoBoleta).save().then(() => {
+                // Ocultamos la vista de la boleta de nuevo para no ensuciar la pantalla
+                elementoBoleta.style.display = 'none';
+
                 // Después de guardar, sumar 1 al contador
                 if(urlGoogleScript !== "TU_ENLACE_AQUI") {
                     document.getElementById("numContador").innerText = "...";
