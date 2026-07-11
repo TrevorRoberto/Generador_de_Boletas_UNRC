@@ -6,10 +6,10 @@ AVISO DE EXENCIÓN DE RESPONSABILIDAD Y TÉRMINOS DE USO
 
 3. Advertencia al Usuario (No es un documento oficial) El documento generado a través de esta plataforma NO posee validez oficial, administrativa o académica alguna. Se advierte explícitamente a todos los usuarios que:
 
-Este documento no sustituye, bajo ninguna circunstancia, los certificados, constancias o boletas emitidas oficialmente por los departamentos de servicios escolares de la universidad.
+  Este documento no sustituye, bajo ninguna circunstancia, los certificados, constancias o boletas emitidas oficialmente     por los departamentos de servicios escolares de la universidad.
 
-El uso de este documento para trámites oficiales, procesos administrativos o legales está estrictamente prohibido y es responsabilidad exclusiva del usuario.
+  El uso de este documento para trámites oficiales, procesos administrativos o legales está estrictamente prohibido y es     responsabilidad exclusiva del usuario.
 
-El creador de esta herramienta deslinda toda responsabilidad por el uso indebido que los usuarios pudieran dar a los documentos generados.
+  El creador de esta herramienta deslinda toda responsabilidad por el uso indebido que los usuarios pudieran dar a los       documentos generados.
 
 4. Compromiso de Retiro En caso de que la Universidad Nacional Rosario Castellanos manifieste cualquier objeción o solicitud de cese respecto al uso de su identidad visual o de este servicio, el creador se compromete a retirar de forma inmediata y sin dilación cualquier elemento objeto de dicha solicitud.
