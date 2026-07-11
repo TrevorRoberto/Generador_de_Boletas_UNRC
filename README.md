@@ -1,18 +1,16 @@
-AVISO DE EXENCIÓN DE RESPONSABILIDAD Y TÉRMINOS DE USO
-1. Naturaleza del Proyecto y Gratuidad
-Este generador de boletas es una herramienta de software independiente, creada por un estudiante y dirigida exclusivamente a la comunidad estudiantil de la Universidad Nacional Rosario Castellanos (UNRC). Este servicio es 100% gratuito; no se cobra por su uso, no genera ningún tipo de beneficio económico, social o político para su creador, ni es utilizado para fines lucrativos. La creación de esta herramienta responde únicamente a la ausencia de mecanismos oficiales de consulta digital o impresión de boletas proporcionados por la institución para el uso personal de los alumnos.
+AVISO DE EXENCIÓN DE RESPONSABILIDAD
+1. Naturaleza y Gratuidad
+Este proyecto es una herramienta de software independiente y de uso 100% gratuito, creada por un estudiante para uso personal de sus compañeros de la Universidad Nacional Rosario Castellanos (UNRC). No tiene fines de lucro, no genera beneficio económico ni social, y no recibe ningún tipo de financiamiento o respaldo institucional.
 
-2. Uso de Identidad Visual
-El uso de logotipos y elementos de identidad visual de la Universidad Nacional Rosario Castellanos (UNRC) en esta plataforma tiene un carácter exclusivamente referencial y estético. Su finalidad es facilitar al estudiante la identificación visual del documento con su entorno académico. En ningún momento se pretende ostentar, suplantar o representar la identidad oficial de la institución. Este proyecto no cuenta con el respaldo, aval, patrocinio ni autorización de la Universidad Nacional Rosario Castellanos.
+2. Documento No Oficial
+El documento generado por esta plataforma es una boleta representativa de ejemplo. NO posee validez oficial, administrativa ni legal.
 
-3. Advertencia al Usuario (No es un documento oficial)
-El documento generado a través de esta plataforma NO posee validez oficial, administrativa o académica alguna. Se advierte explícitamente a todos los usuarios que:
+Se advierte explícitamente a los usuarios que este documento no sustituye, bajo ninguna circunstancia, las boletas, certificados o constancias emitidas oficialmente por la universidad.
 
-Este documento no sustituye, bajo ninguna circunstancia, los certificados, constancias o boletas emitidas oficialmente por los departamentos de servicios escolares de la universidad.
+El usuario acepta que el uso de este documento para fines oficiales, administrativos o externos a su propia gestión personal está prohibido y bajo su exclusiva responsabilidad.
 
-El uso de este documento para trámites oficiales, procesos administrativos o legales está estrictamente prohibido y es responsabilidad exclusiva del usuario.
+3. Uso de Identidad
+Esta herramienta no utiliza logotipos, sellos ni distintivos que permitan confundir este generador con un sistema oficial. Se presenta como una utilidad técnica para la organización personal de calificaciones del estudiante.
 
-El creador de esta herramienta deslinda toda responsabilidad por el uso indebido que los usuarios pudieran dar a los documentos generados.
-
-4. Compromiso de Retiro
-En caso de que la Universidad Nacional Rosario Castellanos manifieste cualquier objeción o solicitud de cese respecto al uso de su identidad visual o de este servicio, el creador se compromete a retirar de forma inmediata y sin dilación cualquier elemento objeto de dicha solicitud.
+4. Política de Retiro
+El creador se compromete a descontinuar este proyecto de forma inmediata ante cualquier solicitud por parte de las autoridades universitarias.
