@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            /* Color oficial actualizado */
             --guinda-unrc: #9F2241; 
             --dorado-unrc: #c8a355;
             --fondo-gris: #f4f4f4;
@@ -49,6 +48,7 @@
         .form-group {
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
         label {
@@ -59,10 +59,12 @@
         }
 
         input, select {
+            width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 1em;
+            box-sizing: border-box; 
         }
 
         .materias-section {
@@ -96,23 +98,13 @@
         
         .botones-accion {
             display: flex;
-            gap: 15px;
             margin-top: 20px;
         }
-
-        .btn-preview { 
-            background-color: var(--dorado-unrc); 
-            color: var(--texto-oscuro); 
-            font-size: 1.1em;
-            flex: 1;
-            padding: 15px;
-        }
-        .btn-preview:hover { background-color: #b59040; }
 
         .btn-pdf { 
             background-color: var(--guinda-unrc); 
             color: white; 
-            font-size: 1.1em;
+            font-size: 1.2em;
             flex: 1;
             padding: 15px;
         }
@@ -205,6 +197,7 @@
             border-left: 1px solid #eee;
             border-right: 1px solid #eee;
             font-size: 13px;
+            word-break: break-word;
         }
 
         .grades-table td:nth-child(3) {
@@ -260,19 +253,19 @@
         <div class="form-grid">
             <div class="form-group">
                 <label>Nombres</label>
-                <input type="text" id="nombres" value="Angel Roberto">
+                <input type="text" id="nombres" value="" placeholder="Ej. Juan Carlos">
             </div>
             <div class="form-group">
                 <label>Apellido Paterno</label>
-                <input type="text" id="apPaterno" value="Peñafiel">
+                <input type="text" id="apPaterno" value="" placeholder="Ej. Pérez">
             </div>
             <div class="form-group">
                 <label>Apellido Materno</label>
-                <input type="text" id="apMaterno" value="Osnaya">
+                <input type="text" id="apMaterno" value="" placeholder="Ej. López">
             </div>
             <div class="form-group">
                 <label>Matrícula</label>
-                <input type="text" id="matricula" value="2026001234">
+                <input type="text" id="matricula" value="" placeholder="Ej. 2026000000">
             </div>
             
             <div class="form-group">
@@ -286,7 +279,7 @@
                     <option value="6">6</option>
                     <option value="7">7</option>
                     <option value="8">8</option>
-                    <option value="9" selected>9</option>
+                    <option value="9">9</option>
                 </select>
             </div>
 
@@ -294,7 +287,7 @@
                 <label>Modalidad</label>
                 <select id="modalidad">
                     <option value="Modelo Educativo Híbrido y Dual">Modelo Educativo Híbrido y Dual</option>
-                    <option value="Presencial Híbrida" selected>Presencial Híbrida</option>
+                    <option value="Presencial Híbrida">Presencial Híbrida</option>
                     <option value="Distancia Híbrida">Distancia Híbrida</option>
                 </select>
             </div>
@@ -302,7 +295,7 @@
             <div class="form-group">
                 <label>Unidad Académica</label>
                 <select id="unidad">
-                    <option value="Unidad Académica Azcapotzalco" selected>Unidad Académica Azcapotzalco</option>
+                    <option value="Unidad Académica Azcapotzalco">Unidad Académica Azcapotzalco</option>
                     <option value="Unidad Académica Coyoacán">Unidad Académica Coyoacán</option>
                     <option value="Unidad Académica Gustavo A. Madero">Unidad Académica Gustavo A. Madero</option>
                     <option value="Unidad Académica Justo Sierra">Unidad Académica Justo Sierra</option>
@@ -335,7 +328,7 @@
                     <option value="Licenciatura en Psicología">Licenciatura en Psicología</option>
                     <option value="Licenciatura en Relaciones Internacionales">Licenciatura en Relaciones Internacionales</option>
                     <option value="Licenciatura en Ciencias de la Comunicación">Licenciatura en Ciencias de la Comunicación</option>
-                    <option value="Ingeniería en Control y Automatización" selected>Ingeniería en Control y Automatización</option>
+                    <option value="Ingeniería en Control y Automatización">Ingeniería en Control y Automatización</option>
                     <option value="Licenciatura en Filosofía e Historia">Licenciatura en Filosofía e Historia</option>
                     <option value="Licenciatura en Desarrollo Comunitario para Zonas Metropolitanas">Licenciatura en Desarrollo Comunitario para Zonas Metropolitanas</option>
                     <option value="Licenciatura en Mercadotecnia y Ventas">Licenciatura en Mercadotecnia y Ventas</option>
@@ -347,9 +340,9 @@
             <label>Unidades de Aprendizaje (Materias)</label>
             <div id="materiasContainer">
                 <div class="materia-row">
-                    <input type="text" placeholder="Clave" class="mat-clave" value="ICAT9CON1">
-                    <input type="text" placeholder="Nombre de la materia" class="mat-nombre" value="Control Digital Avanzado">
-                    <input type="number" placeholder="Calif." min="0" max="10" class="mat-calif" value="10">
+                    <input type="text" placeholder="Clave (Ej. ICAT)" class="mat-clave" value="">
+                    <input type="text" placeholder="Nombre de la materia" class="mat-nombre" value="">
+                    <input type="number" placeholder="Calif." min="0" max="10" class="mat-calif" value="">
                     <button class="btn-remove" onclick="removeRow(this)">X</button>
                 </div>
             </div>
@@ -357,8 +350,7 @@
         </div>
 
         <div class="botones-accion">
-            <button class="btn-preview" onclick="mostrarVistaPrevia()">Ver Vista Previa</button>
-            <button class="btn-pdf" onclick="descargarPDF()">📥 Descargar PDF</button>
+            <button class="btn-pdf" onclick="descargarPDF()">📥 Descargar Boleta PDF</button>
         </div>
     </div>
 
@@ -504,11 +496,6 @@
             document.getElementById('outConteoMaterias').innerText = `Promedio calculado con ${materiasAprobadas} unidades de aprendizaje.`;
         }
 
-        function mostrarVistaPrevia() {
-            prepararDatos();
-            document.getElementById('boletaVista').style.display = 'block';
-        }
-
         function descargarPDF() {
             prepararDatos();
             const elementoBoleta = document.getElementById('boletaVista');
@@ -517,7 +504,7 @@
             
             const opcionesPDF = {
                 margin:       10,
-                filename:     `Boleta_UNRC_${document.getElementById('matricula').value}.pdf`,
+                filename:     `Boleta_UNRC_${document.getElementById('matricula').value || 'Generada'}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true },
                 jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' }
